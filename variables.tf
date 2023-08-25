@@ -421,6 +421,12 @@ variable "memcached_ssm_parameter_endpoint_enabled" {
   description = "Name of the parameter."
 }
 
+variable "memcached_ssm_parameter_secret_enabled" {
+  type        = bool
+  default     = false
+  description = "Name of the parameter."
+}
+
 variable "ssm_parameter_description" {
   type        = string
   default     = "Description of the parameter."
