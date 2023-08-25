@@ -17,9 +17,7 @@ output "tags" {
 }
 
 output "redis_endpoint" {
-  value       = var.cluster_replication_enabled ? 
-   : (var.cluster_replication_enabled
-   ? join("", aws_elasticache_replication_group.cluster[*].primary_endpoint_address) : join("", aws_elasticache_cluster.default[*].configuration_endpoint))
+  value       = var.cluster_replication_enabled ? : (var.cluster_replication_enabled ? join("", aws_elasticache_replication_group.cluster[*].primary_endpoint_address) : join("", aws_elasticache_cluster.default[*].configuration_endpoint))
   description = "Redis endpoint address."
 }
 
