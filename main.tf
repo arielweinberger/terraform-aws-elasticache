@@ -225,28 +225,28 @@ resource "aws_route53_record" "elasticache" {
 ##----------------------------------------------------------------------------------
 ## Below resource will create ssm-parameter resource for redisand memcached with auth-token.
 ##----------------------------------------------------------------------------------
-resource "aws_ssm_parameter" "secret" {
-  count = (var.ssm_parameter_endpoint_enabled && var.auth_token != null) ? 1 : 0
+# resource "aws_ssm_parameter" "secret" {
+#   count = (var.ssm_parameter_endpoint_enabled && var.auth_token != null) ? 1 : 0
 
-  name        = format("/%s/%s/auth-token", var.environment, var.name)
-  description = var.ssm_parameter_description
-  type        = var.ssm_parameter_type
-  value       = var.auth_token
-  key_id      = var.kms_key_id == "" ? join("", aws_kms_key.default[*].arn) : var.kms_key_id
-}
+#   name        = format("/%s/%s/auth-token", var.environment, var.name)
+#   description = var.ssm_parameter_description
+#   type        = var.ssm_parameter_type
+#   value       = var.auth_token
+#   key_id      = var.kms_key_id == "" ? join("", aws_kms_key.default[*].arn) : var.kms_key_id
+# }
 
 ##----------------------------------------------------------------------------------
 ## Below resource will create ssm-parameter resource for redis with endpoint.
 ##----------------------------------------------------------------------------------
-resource "aws_ssm_parameter" "secret-endpoint" {
-  count = var.enable && var.ssm_parameter_endpoint_enabled ? 1 : 0
+# resource "aws_ssm_parameter" "secret-endpoint" {
+#   count = var.enable && var.ssm_parameter_endpoint_enabled ? 1 : 0
 
-  name        = format("/%s/%s/endpoint", var.environment, var.name)
-  description = var.ssm_parameter_description
-  type        = var.ssm_parameter_type
-  value       = var.automatic_failover_enabled ? [join("", aws_elasticache_replication_group.cluster[*].configuration_endpoint_address)][0] : [join("", aws_elasticache_replication_group.cluster[*].primary_endpoint_address)][0]
-  key_id      = var.kms_key_id == "" ? join("", aws_kms_key.default[*].arn) : var.kms_key_id
-}
+#   name        = format("/%s/%s/endpoint", var.environment, var.name)
+#   description = var.ssm_parameter_description
+#   type        = var.ssm_parameter_type
+#   value       = var.automatic_failover_enabled ? [join("", aws_elasticache_replication_group.cluster[*].configuration_endpoint_address)][0] : [join("", aws_elasticache_replication_group.cluster[*].primary_endpoint_address)][0]
+#   key_id      = var.kms_key_id == "" ? join("", aws_kms_key.default[*].arn) : var.kms_key_id
+# }
 
 ##----------------------------------------------------------------------------------
 ## Below resource will create ROUTE-53 resource for memcached.
@@ -264,12 +264,12 @@ resource "aws_route53_record" "memcached_route_53" {
 ##----------------------------------------------------------------------------------
 ## Below resource will create ssm-parameter resource for memcached with endpoint.
 ##----------------------------------------------------------------------------------
-resource "aws_ssm_parameter" "memcached_secret-endpoint" {
-  count = var.memcached_ssm_parameter_endpoint_enabled ? 1 : 0
+# resource "aws_ssm_parameter" "memcached_secret-endpoint" {
+#   count = var.memcached_ssm_parameter_endpoint_enabled ? 1 : 0
 
-  name        = format("/%s/%s/memcached-endpoint", var.environment, var.name)
-  description = var.ssm_parameter_description
-  type        = var.ssm_parameter_type
-  value       = join("", aws_elasticache_cluster.default[*].configuration_endpoint)
-  key_id      = var.kms_key_id == "" ? join("", aws_kms_key.default[*].arn) : var.kms_key_id
-}
+#   name        = format("/%s/%s/memcached-endpoint", var.environment, var.name)
+#   description = var.ssm_parameter_description
+#   type        = var.ssm_parameter_type
+#   value       = join("", aws_elasticache_cluster.default[*].configuration_endpoint)
+#   key_id      = var.kms_key_id == "" ? join("", aws_kms_key.default[*].arn) : var.kms_key_id
+# }
