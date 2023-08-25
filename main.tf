@@ -226,7 +226,7 @@ resource "aws_route53_record" "elasticache" {
 ## Below resource will create ssm-parameter resource for redisand memcached with auth-token.
 ##----------------------------------------------------------------------------------
 resource "aws_ssm_parameter" "secret" {
-  count = (var.auth_token != null && var.ssm_parameter_endpoint_enabled) ? 1 : 0
+  count = (var.ssm_parameter_endpoint_enabled && var.auth_token != null) ? 1 : 0
 
   name        = format("/%s/%s/auth-token", var.environment, var.name)
   description = var.ssm_parameter_description
